@@ -1,0 +1,266 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Question Paper Archive</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            QPA
+        </div>
+
+        <div class="site-name">
+            Question Paper Archive
+        </div>
+
+        <button class="admin-btn">
+            Admin
+        </button>
+
+    </header>
+
+
+    <!-- Main -->
+
+    <main>
+
+        <section class="hero">
+
+            <p class="eyebrow">COLLEGE QUESTION PAPER ARCHIVE</p>
+
+            <h1>
+                Find your question<br>
+                papers <span>easily.</span>
+            </h1>
+
+            <p class="hero-text">
+                Select your academic batch, branch, semester
+                and examination to access previous question papers.
+            </p>
+
+        </section>
+
+
+        <!-- Selection Card -->
+
+        <section class="selection-card">
+
+            <div class="step-number">
+                01
+            </div>
+
+            <h2>Select Academic Batch</h2>
+
+            <p class="selection-description">
+                Choose the academic batch you belong to.
+            </p>
+
+            <select id="batch">
+
+                <option value="">
+                    Select Academic Batch
+                </option>
+
+                <option value="2024">
+                    2024 - 2028
+                </option>
+
+                <option value="2025">
+                    2025 - 2029
+                </option>
+
+            </select>
+
+            <button onclick="selectBatch()">
+                Continue
+                <span>→</span>
+            </button>
+
+        </section>
+
+
+        <!-- Branch -->
+
+        <section class="selection-card hidden" id="branchSection">
+
+            <div class="step-number">
+                02
+            </div>
+
+            <h2>Select Branch</h2>
+
+            <p class="selection-description">
+                Choose your engineering branch.
+            </p>
+
+            <select id="branch">
+
+                <option value="">
+                    Select Branch
+                </option>
+
+                <option value="CE">
+                    Computer Engineering
+                </option>
+
+                <option value="IT">
+                    Information Technology
+                </option>
+
+                <option value="Cybersecurity">
+                    Cybersecurity
+                </option>
+
+                <option value="AIDS">
+                    Artificial Intelligence & Data Science
+                </option>
+
+                <option value="AIML">
+                    Artificial Intelligence & Machine Learning
+                </option>
+
+            </select>
+
+            <button onclick="selectBranch()">
+                Continue
+                <span>→</span>
+            </button>
+
+        </section>
+
+        <!-- Semester -->
+
+<section class="selection-card hidden" id="semesterSection">
+
+    <div class="step-number">
+        03
+    </div>
+
+    <h2>Select Semester</h2>
+
+    <p class="selection-description">
+        Choose the semester for which you want question papers.
+    </p>
+
+    <select id="semester">
+
+        <option value="">
+            Select Semester
+        </option>
+
+        <option value="1">Semester 1</option>
+        <option value="2">Semester 2</option>
+        <option value="3">Semester 3</option>
+        <option value="4">Semester 4</option>
+        <option value="5">Semester 5</option>
+        <option value="6">Semester 6</option>
+        <option value="7">Semester 7</option>
+        <option value="8">Semester 8</option>
+
+    </select>
+
+    <button onclick="selectSemester()">
+        Continue
+        <span>→</span>
+    </button>
+
+</section>
+
+<!-- Exam Type -->
+
+<section class="selection-card hidden" id="examSection">
+
+    <div class="step-number">
+        04
+    </div>
+
+    <h2>Select Exam Type</h2>
+
+    <p class="selection-description">
+        Choose the type of examination.
+    </p>
+
+    <select id="examType">
+
+        <option value="">
+            Select Exam Type
+        </option>
+
+        <option value="CAE1">
+            CAE 1
+        </option>
+
+        <option value="CAE2">
+            CAE 2
+        </option>
+
+        <option value="CAE3">
+            CAE 3
+        </option>
+
+        <option value="ESE">
+            End Semester Examination
+        </option>
+
+    </select>
+
+    <button onclick="selectExam()">
+        Continue
+        <span>→</span>
+    </button>
+
+</section>
+
+<!-- Subject -->
+
+<section class="selection-card hidden" id="subjectSection">
+
+    <div class="step-number">
+        05
+    </div>
+
+    <h2>Select Subject</h2>
+
+    <p class="selection-description">
+        Choose the subject whose question paper you want to view.
+    </p>
+
+    <select id="subject">
+
+        <option value="">
+            Select Subject
+        </option>
+
+    </select>
+
+    <button onclick="selectSubject()">
+        View Paper
+        <span>→</span>
+    </button>
+
+</section>
+
+    </main>
+
+
+    <footer>
+        <p>Question Paper Archive · Academic Resources</p>
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

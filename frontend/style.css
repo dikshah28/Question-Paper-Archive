@@ -1,0 +1,293 @@
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f3f8;
+    color: #332927;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    height: 75px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e5dce8;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #332927;
+    color: #ffffff;
+
+    border-radius: 12px;
+
+    font-weight: bold;
+}
+
+.site-name {
+    margin-right: auto;
+    margin-left: 12px;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.admin-btn {
+    width: auto;
+    margin: 0;
+
+    padding: 9px 20px;
+
+    background: #d6c8df;
+    color: #332927;
+
+    border-radius: 10px;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+main {
+    width: 100%;
+    max-width: 900px;
+
+    margin: auto;
+
+    padding: 70px 20px;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+
+    color: #6f626d;
+
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: 52px;
+    line-height: 1.1;
+
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: #8b6d91;
+}
+
+.hero-text {
+    max-width: 550px;
+
+    margin: auto;
+
+    color: #6f626d;
+
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   SELECTION CARD
+========================= */
+
+.selection-card {
+    max-width: 500px;
+
+    margin: 0 auto 25px;
+
+    padding: 35px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5dce8;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 15px 40px rgba(51, 41, 39, 0.08);
+}
+
+.step-number {
+    display: inline-flex;
+
+    padding: 7px 12px;
+
+    background: #d6c8df;
+
+    color: #332927;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    margin-bottom: 18px;
+}
+
+.selection-card h2 {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.selection-description {
+    color: #6f626d;
+
+    margin-bottom: 25px;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   SELECT
+========================= */
+
+select {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    background: #ffffff;
+
+    border: 2px solid #d6c8df;
+
+    border-radius: 12px;
+
+    color: #332927;
+
+    font-size: 15px;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+select:focus {
+    border-color: #332927;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+button {
+    border: none;
+
+    cursor: pointer;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.selection-card button {
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 14px;
+
+    background: #332927;
+
+    color: #ffffff;
+
+    border-radius: 12px;
+}
+
+.selection-card button span {
+    margin-left: 8px;
+}
+
+.selection-card button:hover {
+    background: #493a37;
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    text-align: center;
+
+    padding: 30px;
+
+    color: #8a7b88;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   HIDDEN
+========================= */
+
+.hidden {
+    display: none;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .site-name {
+        font-size: 15px;
+    }
+
+    main {
+        padding: 45px 18px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .selection-card {
+        padding: 25px;
+    }
+
+}
