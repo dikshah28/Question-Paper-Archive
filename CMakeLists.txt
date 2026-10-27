@@ -21,6 +21,11 @@ add_executable(server
 
 target_link_libraries(server PRIVATE
     Crow::Crow
-    ws2_32
-    mswsock
 )
+
+if (WIN32)
+    target_link_libraries(server PRIVATE
+        ws2_32
+        mswsock
+    )
+endif()

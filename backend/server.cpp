@@ -1,5 +1,5 @@
 #include <crow.h>
-
+#include <cstdlib>
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
@@ -172,7 +172,10 @@ int main()
         return response;
     });
 
-    app.port(8080).multithreaded().run();
+    const char* portEnv = std::getenv("PORT");
+    const int port = portEnv ? std::stoi(portEnv) : 8080;
+
+    app.bindaddr("0.0.0.0").port(port).multithreaded().run();
 
     return 0;
 }
