@@ -67,268 +67,84 @@ function selectExam() {
    SUBJECT DATABASE
 ========================= */
 
-const subjects = {
+const API_BASE = "https://question-paper-his8.onrender.com";
 
-    1: {
-        CE: [
-            "ENGINEERING MATHEMATICS",
-            "ENGINEERING PHYSICS -I",
-            "BASIC ELECTRICAL ENGINEERING",
-            "WEB 2.0",
-            "INTRODUCTION TO CYBER SECURITY"
-        ],
+let paperCatalog = null;
 
-        IT: [
-            "ENGINEERING MATHEMATICS",
-            "ENGINEERING PHYSICS -I",
-            "BASIC ELECTRICAL ENGINEERING",
-            "WEB 2.0",
-            "INTRODUCTION TO CYBER SECURITY"
-        ],
-
-        Cybersecurity: [
-            "ENGINEERING MATHEMATICS",
-            "ENGINEERING PHYSICS -I",
-            "BASIC ELECTRICAL ENGINEERING",
-            "WEB 2.0",
-            "INTRODUCTION TO CYBER SECURITY"
-        ],
-
-        AIDS: [
-            "ENGINEERING MATHEMATICS",
-            "ENGINEERING PHYSICS -I",
-            "BASIC ELECTRICAL ENGINEERING",
-            "WEB 2.0",
-            "INTRODUCTION TO CYBER SECURITY"
-        ],
-
-        AIML: [
-            "ENGINEERING MATHEMATICS",
-            "ENGINEERING PHYSICS -I",
-            "BASIC ELECTRICAL ENGINEERING",
-            "WEB 2.0",
-            "INTRODUCTION TO CYBER SECURITY"
-        ]
-    },
-
-
-    2: {
-        CE: [
-            "PROBABILITY AND STATISTICS",
-            "ENGINEERING PHYSICS -II",
-            "DIGITAL ELECTRONICS",
-            "PROGRAMMING LOGIC SKILLS",
-            "INDIAN KNOWLEDGE SYSTEM"
-        ],
-
-        IT: [
-            "PROBABILITY AND STATISTICS",
-            "ENGINEERING PHYSICS -II",
-            "DIGITAL ELECTRONICS",
-            "PROGRAMMING LOGIC SKILLS",
-            "INDIAN KNOWLEDGE SYSTEM"
-        ],
-
-        Cybersecurity: [
-            "PROBABILITY AND STATISTICS",
-            "ENGINEERING PHYSICS -II",
-            "DIGITAL ELECTRONICS",
-            "PROGRAMMING LOGIC SKILLS",
-            "INDIAN KNOWLEDGE SYSTEM"
-        ],
-
-        AIDS: [
-            "PROBABILITY AND STATISTICS",
-            "ENGINEERING PHYSICS -II",
-            "DIGITAL ELECTRONICS",
-            "PROGRAMMING LOGIC SKILLS",
-            "INDIAN KNOWLEDGE SYSTEM"
-        ],
-
-        AIML: [
-            "PROBABILITY AND STATISTICS",
-            "ENGINEERING PHYSICS -II",
-            "DIGITAL ELECTRONICS",
-            "PROGRAMMING LOGIC SKILLS",
-            "INDIAN KNOWLEDGE SYSTEM"
-        ]
-    },
-
-
-    3: {
-
-        CE: [
-            "DISCRETE MATHEMATICS AND GRAPH THEORY",
-            "DATA STRUCTURES AND ALGORITHMS",
-            "COMPUTER ARCHITECTURE AND ORGANIZATION",
-            "INTRODUCTION TO ARTIFICIAL INTELLIGENCE"
-        ],
-
-        IT: [
-            "DISCRETE MATHEMATICS AND GRAPH THEORY",
-            "DATA STRUCTURES AND ALGORITHMS",
-            "COMPUTER ARCHITECTURE AND ORGANIZATION",
-            "INTRODUCTION TO ARTIFICIAL INTELLIGENCE"
-        ],
-
-        Cybersecurity: [
-            "DISCRETE MATHEMATICS AND GRAPH THEORY",
-            "DATA STRUCTURES AND ALGORITHMS",
-            "COMPUTER ARCHITECTURE AND ORGANIZATION",
-            "INTRODUCTION TO ARTIFICIAL INTELLIGENCE"
-        ],
-
-        AIDS: [
-            "DISCRETE MATHEMATICS AND GRAPH THEORY",
-            "MACHINE LEARNING SKILL",
-            "DATA STRUCTURES AND ALGORITHMS",
-            "DATA VISUALIZATION SKILLS",
-            "COMPUTER ARCHITECTURE AND ORGANIZATION"
-        ],
-
-        AIML: [
-            "DISCRETE MATHEMATICS AND GRAPH THEORY",
-            "MACHINE LEARNING SKILL",
-            "DATA STRUCTURES AND ALGORITHMS",
-            "DATA VISUALIZATION SKILLS",
-            "COMPUTER ARCHITECTURE AND ORGANIZATION"
-        ]
-    },
-
-
-    4: {
-
-        CE: [
-            "TRANSFORM AND NUMERICAL METHODS",
-            "WEB TECHNOLOGY",
-            "OPERATING SYSTEMS",
-            "THEORY OF COMPUTATION",
-            "JAVA PROGRAMMING SKILLS"
-        ],
-
-        IT: [
-            "TRANSFORM AND NUMERICAL METHODS",
-            "WEB TECHNOLOGY",
-            "OPERATING SYSTEMS",
-            "THEORY OF COMPUTATION",
-            "JAVA PROGRAMMING SKILLS"
-        ],
-
-        Cybersecurity: [
-            "TRANSFORM AND NUMERICAL METHODS",
-            "WEB TECHNOLOGY",
-            "OPERATING SYSTEMS",
-            "THEORY OF COMPUTATION",
-            "JAVA PROGRAMMING SKILLS"
-        ],
-
-        AIDS: [
-            "MATHEMATICAL FOUNDATION FOR AI & MACHINE LEARNING",
-            "OPERATING SYSTEMS",
-            "OBJECT ORIENTED PROGRAMMING SKILLS",
-            "COMPUTER NETWORKS",
-            "MOBILE APPLICATION DEVELOPMENT"
-        ],
-
-        AIML: [
-            "MATHEMATICAL FOUNDATION FOR AI & MACHINE LEARNING",
-            "OPERATING SYSTEMS",
-            "OBJECT ORIENTED PROGRAMMING SKILLS",
-            "COMPUTER NETWORKS",
-            "MOBILE APPLICATION DEVELOPMENT"
-        ]
-    },
-
-
-    5: {
-
-        CE: [
-            "DATABASE MANAGEMENT SYSTEM",
-            "COMPUTER NETWORKS AND SECURITY",
-            "CLOUD COMPUTING",
-            "SOFTWARE ENGINEERING AND PROJECT MANAGEMENT",
-            "ENGINEERING ECONOMICS AND INDUSTRIAL MANAGEMENT",
-            "FOUNDATIONS OF DATA SCIENCE"
-        ],
-
-        IT: [
-            "DATABASE MANAGEMENT SYSTEM",
-            "COMPUTER NETWORKS AND SECURITY",
-            "CLOUD COMPUTING",
-            "SOFTWARE ENGINEERING AND PROJECT MANAGEMENT",
-            "ENGINEERING ECONOMICS AND INDUSTRIAL MANAGEMENT",
-            "FOUNDATIONS OF DATA SCIENCE"
-        ],
-
-        Cybersecurity: [
-            "DATABASE MANAGEMENT SYSTEM",
-            "COMPUTER NETWORKS AND SECURITY",
-            "CLOUD COMPUTING",
-            "SOFTWARE ENGINEERING AND PROJECT MANAGEMENT",
-            "ENGINEERING ECONOMICS AND INDUSTRIAL MANAGEMENT",
-            "FOUNDATIONS OF DATA SCIENCE"
-        ],
-
-        AIDS: [
-            "DATABASE MANAGEMENT SYSTEM",
-            "DESIGN AND ANALYSIS OF ALGORITHMS",
-            "CLOUD COMPUTING",
-            "OPTIMIZATION TECHNIQUES IN MACHINE LEARNING",
-            "ENGINEERING ECONOMICS AND INDUSTRIAL MANAGEMENT",
-            "ETHICAL HACKING AND PENETRATION TESTING"
-        ],
-
-        AIML: [
-            "DATABASE MANAGEMENT SYSTEM",
-            "DESIGN AND ANALYSIS OF ALGORITHMS",
-            "CLOUD COMPUTING",
-            "OPTIMIZATION TECHNIQUES IN MACHINE LEARNING",
-            "ENGINEERING ECONOMICS AND INDUSTRIAL MANAGEMENT",
-            "ETHICAL HACKING AND PENETRATION TESTING"
-        ]
-    }
-};
-
-function loadSubjects() {
-
-    const semester =
-        document.getElementById("semester").value;
-
-    const branch =
-        document.getElementById("branch").value;
-
-    const subjectDropdown =
-        document.getElementById("subject");
-
-    subjectDropdown.innerHTML =
-        '<option value="">Select Subject</option>';
-
-    const semesterSubjects =
-        subjects[semester]?.[branch];
-
-    if (!semesterSubjects) {
-
-        alert("Subjects for this semester are not available yet.");
-
-        return;
+async function fetchCatalog() {
+    if (paperCatalog) {
+        return paperCatalog;
     }
 
-    semesterSubjects.forEach(function(subject) {
+    const response = await fetch(`${API_BASE}/api/catalog`);
 
-        const option =
-            document.createElement("option");
+    if (!response.ok) {
+        throw new Error(`Catalog request failed: ${response.status}`);
+    }
 
-        option.value = subject;
-        option.textContent = subject;
+    const data = await response.json();
 
-        subjectDropdown.appendChild(option);
-    });
+    if (!data.papers || typeof data.papers !== "object") {
+        throw new Error("The catalog response has an unexpected format.");
+    }
+
+    paperCatalog = data.papers;
+    return paperCatalog;
+}
+
+async function loadSubjects() {
+    const batch = document.getElementById("batch").value;
+    const branch = document.getElementById("branch").value;
+    const semester = document.getElementById("semester").value;
+    const examType = document.getElementById("examType").value;
+
+    const subjectDropdown = document.getElementById("subject");
+
+    subjectDropdown.replaceChildren(
+        new Option("Loading subjects...", "")
+    );
 
     document.getElementById("subjectSection")
         .classList.remove("hidden");
+
+    try {
+        const catalog = await fetchCatalog();
+
+        // Convert a batch such as "2024-2028" to the catalog key "2024".
+        const batchStart = batch.split("-")[0];
+
+        const subjects =
+            catalog[batchStart]?.[branch]?.[semester]?.[examType] ?? [];
+
+        subjectDropdown.replaceChildren(
+            new Option(
+                subjects.length ? "Select Subject" : "No papers available for this exam",
+                ""
+            )
+        );
+
+        subjects.forEach(subject => {
+            subjectDropdown.add(new Option(subject, subject));
+        });
+
+        if (subjects.length === 0) {
+            console.info("No papers found for:", {
+                batch,
+                branch,
+                semester,
+                examType
+            });
+        }
+    } catch (error) {
+        console.error("Unable to load paper catalog:", error);
+
+        subjectDropdown.replaceChildren(
+            new Option("Unable to load subjects. Please try again.", "")
+        );
+    }
 }
 
-function selectSubject() {
+async function selectSubject() {
     const subject = document.getElementById("subject").value;
     const batch = document.getElementById("batch").value;
     const branch = document.getElementById("branch").value;
@@ -336,19 +152,35 @@ function selectSubject() {
     const examType = document.getElementById("examType").value;
 
     if (!subject) {
-        alert("Please select a subject.");
+        alert("Please select an available subject.");
         return;
     }
 
-    const apiBase = "https://question-paper-his8.onrender.com";
+    try {
+        const catalog = await fetchCatalog();
+        const batchStart = batch.split("-")[0];
 
-    const paperUrl = new URL(
-        `${apiBase}/api/paper/${batch}/${encodeURIComponent(branch)}/${semester}/${encodeURIComponent(examType)}`
-    );
-    paperUrl.searchParams.set("subject", subject);
+        const availableSubjects =
+            catalog[batchStart]?.[branch]?.[semester]?.[examType] ?? [];
 
-    window.open(paperUrl.toString(), "_blank");
+        if (!availableSubjects.includes(subject)) {
+            alert("This paper is not available for the selected exam.");
+            await loadSubjects();
+            return;
+        }
+
+        const paperUrl = new URL(`${API_BASE}/api/paper/${batch}/${encodeURIComponent(branch)}/${semester}/${encodeURIComponent(examType)}`);
+
+        paperUrl.searchParams.set("subject", subject);
+
+        window.open(paperUrl.toString(), "_blank");
+    } catch (error) {
+        console.error("Unable to validate paper:", error);
+        alert("Unable to verify paper availability. Please try again.");
+    }
 }
+
+
 
 async function testBackend() {
     try {
