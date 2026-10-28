@@ -378,3 +378,100 @@ async function testBackend() {
         console.error("Backend connection failed:", error);
     }
 }
+
+
+/* iOS bubble dropdown enhancement — preserves existing logic */
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".selection-card select").forEach(select => {
+        if (select.dataset.iosReady) return;
+        select.dataset.iosReady = "true";
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "ios-select";
+
+        const trigger = document.createElement("button");
+        trigger.type = "button";
+        trigger.className = "ios-trigger";
+
+        const label = document.createElement("span");
+        const arrow = document.createElement("span");
+        arrow.textContent = "⌄";
+
+        trigger.append(label, arrow);
+
+        const menu = document.createElement("div");
+        menu.className = "ios-menu";
+
+        select.parentNode.insertBefore(wrapper, select);
+        wrapper.append(trigger, menu, select);
+        select.classList.add("ios-native-hidden");
+
+        function refreshOptions() {
+            const selected = select.options[select.selectedIndex];
+            label.textContent = selected
+                ? selected.textContent.trim()
+                : "Select an option";
+
+            menu.replaceChildren();
+
+            Array.from(select.options).forEach(option => {
+                const item = document.createElement("button");
+                item.type = "button";
+                item.className = "ios-option";
+                item.textContent = option.textContent.trim();
+
+                if (option.value === select.value) {
+                    item.classList.add("selected");
+                }
+
+                item.addEventListener("click", () => {
+                    select.value = option.value;
+
+                    // Keep all existing change listeners working.
+                    select.dispatchEvent(
+                        new Event("change", { bubbles: true })
+                    );
+
+                    refreshOptions();
+                    wrapper.classList.remove("open");
+                    trigger.setAttribute("aria-expanded", "false");
+                });
+
+                menu.appendChild(item);
+            });
+        }
+
+        trigger.setAttribute("aria-expanded", "false");
+
+        trigger.addEventListener("click", () => {
+            const willOpen = !wrapper.classList.contains("open");
+
+            document.querySelectorAll(".ios-select.open")
+                .forEach(other => {
+                    other.classList.remove("open");
+                    other.querySelector(".ios-trigger")
+                        ?.setAttribute("aria-expanded", "false");
+                });
+
+            if (willOpen) {
+                // Read fresh options, even if existing code updated them.
+                refreshOptions();
+                wrapper.classList.add("open");
+                trigger.setAttribute("aria-expanded", "true");
+            }
+        });
+
+        select.addEventListener("change", refreshOptions);
+        refreshOptions();
+    });
+
+    document.addEventListener("click", event => {
+        document.querySelectorAll(".ios-select.open").forEach(wrapper => {
+            if (!wrapper.contains(event.target)) {
+                wrapper.classList.remove("open");
+                wrapper.querySelector(".ios-trigger")
+                    ?.setAttribute("aria-expanded", "false");
+            }
+        });
+    });
+});

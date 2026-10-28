@@ -291,3 +291,218 @@ footer {
     }
 
 }
+
+
+/* ========================================
+   iOS-STYLE BUBBLE DROPDOWNS
+   Dropdown styling only
+======================================== */
+
+.selection-card select {
+    width: 100%;
+    min-height: 58px;
+    padding: 0 48px 0 20px;
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    color: #29232c;
+
+    background-color: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(170, 145, 175, 0.35);
+    border-radius: 20px;
+
+    outline: none;
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    /* Custom dropdown arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23352c38' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 20px;
+
+    box-shadow:
+        0 4px 14px rgba(64, 42, 65, 0.045),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+/* Soft bubble effect on hover */
+.selection-card select:hover {
+    background-color: #fff8fc;
+    border-color: #e8c7dd;
+
+    box-shadow:
+        0 6px 18px rgba(190, 133, 170, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* iOS-inspired focus ring */
+.selection-card select:focus {
+    border-color: #d8a9ca;
+    background-color: #fffafd;
+
+    box-shadow:
+        0 0 0 4px rgba(232, 190, 218, 0.24),
+        0 8px 22px rgba(190, 133, 170, 0.10);
+}
+
+/* Rounded option styling where supported */
+.selection-card select option {
+    padding: 12px 16px;
+    color: #29232c;
+    background-color: #ffffff;
+    font-size: 16px;
+}
+
+/* Selected option */
+.selection-card select option:checked {
+    color: #29232c;
+    background-color: #f8e7f0;
+}
+
+/* Disabled placeholder */
+.selection-card select option[value=""] {
+    color: #8c8190;
+}
+
+/* Keyboard navigation and accessibility */
+.selection-card select:focus-visible {
+    outline: 2px solid rgba(216, 169, 202, 0.65);
+    outline-offset: 3px;
+}
+
+/* Smaller screens */
+@media (max-width: 600px) {
+    .selection-card select {
+        min-height: 54px;
+        padding-left: 16px;
+        padding-right: 42px;
+        border-radius: 18px;
+        font-size: 15px;
+        background-position: right 14px center;
+    }
+}
+
+
+
+/* iOS bubble dropdown options */
+.ios-select {
+    position: relative;
+    width: 100%;
+    margin-bottom: 18px;
+    z-index: 10;
+}
+
+.ios-select.open {
+    z-index: 999;
+}
+
+.ios-select .ios-trigger {
+    width: 100%;
+    min-height: 58px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    border: 1px solid #e5c6dc;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.88);
+    color: #29232c;
+    font: inherit;
+    cursor: pointer;
+    transition: background .2s, box-shadow .2s;
+}
+
+.ios-select .ios-trigger:hover {
+    background: #fff8fc;
+    box-shadow: 0 4px 16px #d9b5ce30;
+}
+
+.ios-select .ios-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+
+    background: rgba(255, 255, 255, .86);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+
+    border: 1px solid #ffffff;
+    border-radius: 25px;
+    box-shadow: 0 14px 40px #49334b20;
+
+    max-height: 260px;
+    overflow-y: auto;
+    display: none;
+}
+
+.ios-select.open .ios-menu {
+    display: block;
+    animation: iosMenuIn .18s ease-out;
+}
+
+.ios-select .ios-option {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 16px;
+    margin: 2px 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+    color: #29232c;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    transition: background .18s, transform .18s;
+}
+
+.ios-select .ios-option:hover,
+.ios-select .ios-option.selected {
+    background: rgba(249, 225, 239, .9);
+    border-color: #f2d9e8;
+}
+
+.ios-select .ios-option:hover {
+    transform: scale(.99);
+}
+
+.ios-select .ios-option.selected::after {
+    content: "✓";
+    color: #a65f8b;
+    font-weight: 600;
+}
+
+.ios-native-hidden {
+    display: none !important;
+}
+
+@keyframes iosMenuIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px) scale(.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
