@@ -329,40 +329,25 @@ function loadSubjects() {
 }
 
 function selectSubject() {
+    const subject = document.getElementById("subject").value;
+    const batch = document.getElementById("batch").value;
+    const branch = document.getElementById("branch").value;
+    const semester = document.getElementById("semester").value;
+    const examType = document.getElementById("examType").value;
 
-    const subject =
-        document.getElementById("subject").value;
-
-    if (subject === "") {
+    if (!subject) {
         alert("Please select a subject.");
         return;
     }
 
-    const batch =
-        document.getElementById("batch").value;
+    const apiBase = "https://question-paper-his8.onrender.com";
 
-    const branch =
-        document.getElementById("branch").value;
+    const paperUrl = new URL(
+        `${apiBase}/api/paper/${batch}/${encodeURIComponent(branch)}/${semester}/${encodeURIComponent(examType)}`
+    );
+    paperUrl.searchParams.set("subject", subject);
 
-    const semester =
-        document.getElementById("semester").value;
-
-    const examType =
-        document.getElementById("examType").value;
-
-
-    // Create PDF path
-
-    const pdfPath =
-        `../papers/${batch}-${parseInt(batch) + 4}/${branch}/Semester${semester}/${examType}/${subject}.pdf`;
-
-
-    console.log("PDF Path:", pdfPath);
-
-
-    // Open PDF
-
-    window.open(pdfPath, "_blank");
+    window.open(paperUrl.toString(), "_blank");
 }
 
 async function testBackend() {
